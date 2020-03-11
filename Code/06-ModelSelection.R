@@ -1,6 +1,8 @@
 # Chapter 6 Code
 
 wine <- read.csv(file = "Data/wine.csv")
+park <- read.csv(file = "Data/park.csv")
+gene <- read.csv(file = "Data/gene.csv")
 
 # Subset selection ---------------------------------------------------
 
@@ -97,6 +99,8 @@ lasso.pred2 <- predict(fit.Lasso, s = fit.Lasso$lambda[90], newx = x)
 mean((lasso.pred2 - y)^2)
 summary(lasso.pred2)
 
+
+
 # Dimension reduction ------------------------------------------------
 
 library(pls)
@@ -108,6 +112,53 @@ validationplot(fit.PCR, val.type = "MSEP")
 
 pred.PCR <- predict(fit.PCR, wine, ncomp = 2)
 mean((pred.PCR - wine$quality)^2)
+
+
+
+# CV and train/test --------------------------------------------------
+
+#cv with glmnet
+set.seed(234)
+
+x <- model.matrix(out ~ ., gene)[, -1]
+y <- gene$out
+
+fit.gene <- cv.glmnet(x, y, alpha = 1, nfolds = 5)
+fit.gene$lambda
+fit.gene$lambda.min
+fit.gene$lambda.1se
+coef(fit.gene, s = c(fit.gene$lambda.min, fit.gene$lambda.1se))
+predict(fit.gene, newx = x, s = "lambda.min")
+
+
+#train/test
+set.seed(1)
+train <- sample(1:dim(park)[1], 0.75*dim(park)[1])
+
+x <- model.matrix(total_UPDRS ~ ., park)[, -1]
+y <- park$total_UPDRS
+
+fit.r <- cv.glmnet(x[train, ], y[train], alpha = 0)
+plot(fit.r)
+bestlam.r <- fit.r$lambda.min
+pred.ridge <- predict(fit.r, s = bestlam.r, newx = x[-train, ])
+mean((pred.ridge - y[-train])^2)
+
+fit.l <- cv.glmnet(x[train, ], y[train], alpha = 1)
+plot(fit.l)
+bestlam.l <- fit.l$lambda.min
+pred.lasso <- predict(fit.l, s = bestlam.l, newx = x[-train, ])
+mean((pred.lasso - y[-train])^2)
+
+fit.reg <- lm(total_UPDRS ~ ., data = park, subset = train)
+pred.reg <- predict(fit.reg, park[-train, ])
+mean((pred.reg - park$total_UPDRS[-train])^2)
+
+best.fit <- glmnet(x, y, alpha = 1)
+predict(best.fit, s = bestlam.l, type = "coefficients")
+
+
+
 
 
 
