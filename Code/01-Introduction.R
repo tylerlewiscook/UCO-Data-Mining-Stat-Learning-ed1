@@ -117,7 +117,8 @@ wine <- read.csv(file = "wine.csv")
 str(wine)
 
 
-advertising <- read.csv(url("http://faculty.marshall.usc.edu/gareth-james/ISL/Advertising.csv"))
+#advertising <- read.csv(url("http://faculty.marshall.usc.edu/gareth-james/ISL/Advertising.csv"))  link no longer works
+gene <- read.csv(file = "https://raw.githubusercontent.com/tylerlewiscook/UCO-Data-Mining-Stat-Learning/master/Data/gene.csv")
 
 save(b, file = "favoriteMatrix.RData")
 rm(b)
