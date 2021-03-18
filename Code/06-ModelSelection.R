@@ -133,6 +133,7 @@ predict(fit.gene, newx = x, s = "lambda.min")
 
 #train/test
 set.seed(1)
+park <- park[, -1]
 train <- sample(1:dim(park)[1], 0.75*dim(park)[1])
 
 x <- model.matrix(total_UPDRS ~ ., park)[, -1]
@@ -154,11 +155,11 @@ fit.reg <- lm(total_UPDRS ~ ., data = park, subset = train)
 pred.reg <- predict(fit.reg, park[-train, ])
 mean((pred.reg - park$total_UPDRS[-train])^2)
 
-fit.pcr <- pcr(total_UPDRS ~ ., data = park, scale = TRUE, validation = "CV")
+fit.pcr <- pcr(total_UPDRS ~ ., data = park, scale = TRUE, validation = "CV") 
 summary(fit.pcr)
 validationplot(fit.pcr, val.type = "MSEP")
 pred.pcr <- predict(fit.pcr, park, ncomp = 8)
-mean((pred.pcr - park$total_UPDRS)^2)
+mean((pred.pcr - park$total_UPDRS)^2)   # subset?
 
 best.fit <- glmnet(x, y, alpha = 1)
 predict(best.fit, s = bestlam.l, type = "coefficients")
