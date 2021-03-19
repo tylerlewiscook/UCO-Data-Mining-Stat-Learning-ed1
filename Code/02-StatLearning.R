@@ -6,9 +6,9 @@ set.seed(1)
 rnorm(10)           # Random number generation
 rnorm(10, 50, 5)
 
-dnorm(0)            # Density values f(x)/p(x)
+dnorm(0)            # Density values: p(x) = P(X = x) for disc or f(x) for cont
 
-pnorm(0)            # Distribution value F(x)
+pnorm(0)            # Distribution value: F(x) = P(X <= x)
 
 qnorm(0.5)          # Quantile values 
 
