@@ -1,6 +1,6 @@
 # Chapter 4 Code
 
-leukemia <- read.csv(file = "Data/leukemia.csv")
+leukemia <- read.csv(file = "Data/leukemia.csv", stringsAsFactors = TRUE)
 
 # Logistic regression ---------------------------------------------------
 
