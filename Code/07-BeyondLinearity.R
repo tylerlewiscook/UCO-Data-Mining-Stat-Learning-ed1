@@ -56,6 +56,7 @@ lines(pred4$x, pred4$y, col = "blue", lwd = 2)
 fit4$df
 fit4$spar
 
+# https://pclambert.net/interactivegraphs/spline_eg/spline_eg
 
 # Local regression --------------------------------------------------
 
