@@ -61,6 +61,10 @@ plot(hcSingle, main = "Single", cex = 0.75)
 cutree(hcComp, k = 2)
 cutree(hcComp, h = 8.25)
 
+par(mfrow = c(1,1))
+plot(hcComp, main = "Complete", cex = 0.75)
+rect.hclust(hcComp, 2)
+
 par(mfrow = c(1, 2))
 newgenedist <- as.dist(1 - cor(t(genes)))
 hcCorr <- hclust(newgenedist, method = "complete")
