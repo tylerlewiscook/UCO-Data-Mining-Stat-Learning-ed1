@@ -1,6 +1,6 @@
 # UCO-Data-Mining-Stat-Learning
 
-Resources to accompany STAT 4533/5533 Data Mining & Statistical Learning at the University of Central Oklahoma.
+Resources to accompany STAT 4533/5533 Data Mining & Statistical Learning at the University of Central Oklahoma.  This repository contains code to accompany the first edition of the textbook and is outdated as of January 2022.
 
 ### Useful Links
 - Download [R](https://www.r-project.org/) and [RStudio](https://rstudio.com/).
